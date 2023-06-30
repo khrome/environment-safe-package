@@ -1,7 +1,7 @@
 ## Members
 
 <dl>
-<dt><a href="#foo">foo</a> : <code>number</code></dt>
+<dt><a href="#baseDir">baseDir</a> : <code>number</code></dt>
 <dd><p>The basedir for fetching the package (defaults to &#39;..&#39;).</p>
 </dd>
 </dl>
@@ -22,9 +22,9 @@
 </dd>
 </dl>
 
-<a name="foo"></a>
+<a name="baseDir"></a>
 
-## foo : <code>number</code>
+## baseDir : <code>number</code>
 The basedir for fetching the package (defaults to '..').
 
 **Kind**: global variable  

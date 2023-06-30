@@ -20,7 +20,7 @@ const ensureRequire = () => !internalRequire && (internalRequire = mod.createReq
 
 /**
  * The basedir for fetching the package (defaults to '..').
- * @var {number} foo
+ * @var {number} baseDir
  */
 let baseDir = '..';
 
