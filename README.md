@@ -3,7 +3,7 @@ environment-safe-package
 
 This normalizes the difference for local inclusion of package.json whether in node or the browser with no build.
 
-While babel will merrily pass this through browsers won't, so if you want source execution in both environments without build, there is no option. That's where this comes in.
+While babel will merrily pass this through, while browsers won't. If you want source execution in both environments without build, there is no option. That's where this comes in.
 
 Usage
 -----
@@ -19,11 +19,11 @@ import { getPackage } from 'environment-safe-package/src/environment-safe-packag
 
 Using commonjs
 ```javascript
-const { getPackage } = require('environment-safe-package'');
+const { getPackage } = require('environment-safe-package');
 (async ()=>{
     const package = await getPackage();
     //do something with the package here
-})()
+})();
 ```
 
 Testing
@@ -54,3 +54,4 @@ Contribution
 All work is done in the .mjs files and will be transpiled on commit to commonjs and tested.
 
 If the above tests pass, then attempt a commit which will generate .d.ts files alongside the `src` files and commonjs classes in `dist`
+
