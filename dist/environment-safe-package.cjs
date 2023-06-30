@@ -12,7 +12,24 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 let internalRequire = null;
 if (typeof require !== 'undefined') internalRequire = require;
 const ensureRequire = () => !internalRequire && (internalRequire = mod.createRequire(require('url').pathToFileURL(__filename).toString()));
+
+/**
+ * A number, or a string containing a number.
+ * @typedef { object } JSON
+ */
+
+/**
+ * The basedir for fetching the package (defaults to '..').
+ * @var {number} foo
+ */
 let baseDir = '..';
+
+/**
+ * This function fetches the package in a uniform way
+ * @async
+ * @function getPackage
+ * @returns { JSON } packageData
+ */
 exports.baseDir = baseDir;
 const getPackage = async () => {
   if (_browserOrNode.isBrowser || _browserOrNode.isJsDom) {
