@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha Tests</title>
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script type="importmap">
+        {
+            "imports": {
+                "chai": "../node_modules/chai/chai.js",
+                "environment-safe-chai": "../node_modules/environment-safe-chai/environment-safe-chai.js",
+                "module": "../node_modules/browser-or-node/src/index.js",
+                "node:events": "../node_modules/extended-emitter/node-events.mjs",
+                "path": "../node_modules/browser-or-node/src/index.js",
+                "browser-or-node": "../node_modules/browser-or-node/src/index.js"
+            }
+        }
+    </script>
+    <script type="module" src="test.mjs"></script>
+    <script>
+      if (/^file:\/\/\//.test(location.href)) {
+          let path = './';
+          let orig = fetch;
+          window.fetch = (resource) => ((/^[^/:]*:/.test(resource)) ?
+              orig(resource) :
+              new Promise(function(resolve, reject) {
+                  let request = new XMLHttpRequest();
+      
+                  let fail = (error) => {reject(error)};
+                  ['error', 'abort'].forEach((event) => { request.addEventListener(event, fail); });
+      
+                  let pull = (expected)=>( new Promise((resolve, reject)=>{
+                      const isRequestOfType = (type)=> request.response && (
+                        request.responseType == expected ||
+                        (expected == type && !request.responseType)
+                      );
+                      if ( isRequestOfType('text') ){
+                        resolve(request.response);
+                      }else{
+                        if( isRequestOfType('json') ){
+                          resolve(
+                            typeof request.response === 'string'?
+                            JSON.parse(request.response):
+                            request.response
+                          );
+                        }else{
+                          reject(request.responseType);
+                        }
+                      }
+                  }) );
+      
+                  request.addEventListener('load', () => (resolve({
+                      arrayBuffer : () => (pull('arraybuffer')),
+                      blob        : () => (pull('blob')),
+                      text        : () => (pull('text')),
+                      json        : () => (pull('json'))
+                  })));
+                  request.open('GET', resource.replace(/^\//, path));
+                  request.send();
+              })
+          );
+      }
+    </script>
+    <script type="module">
+        mocha.run();
+    </script>
+  </body>
+</html>

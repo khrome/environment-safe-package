@@ -4,10 +4,11 @@ import * as path from 'path';
 let require = null;
 const ensureRequire = ()=> (!require) && (require = mod.createRequire(import.meta.url));
 
-export let baseDir = '/';
+export let baseDir = '..';
 export const getPackage = async ()=>{
     if(isBrowser || isJsDom){
-        const response = await fetch(`${baseDir}/package.json`);
+        const url = `${baseDir}/package.json`;
+        const response = await fetch(url);
         const data = await response.json();
         return data;
     }else{
