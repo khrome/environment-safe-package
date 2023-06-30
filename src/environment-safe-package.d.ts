@@ -1,5 +1,5 @@
 /**
- * A number, or a string containing a number.
+ * A JSON object
  */
 declare type JSON = any;
 

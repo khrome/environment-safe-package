@@ -6,7 +6,7 @@ if(typeof require !== 'undefined') internalRequire = require;
 const ensureRequire = ()=> (!internalRequire) && (internalRequire = mod.createRequire(import.meta.url));
 
 /**
- * A number, or a string containing a number.
+ * A JSON object
  * @typedef { object } JSON
  */
 

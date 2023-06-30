@@ -18,7 +18,7 @@
 
 <dl>
 <dt><a href="#JSON">JSON</a> : <code>object</code></dt>
-<dd><p>A number, or a string containing a number.</p>
+<dd><p>A JSON object</p>
 </dd>
 </dl>
 
@@ -38,6 +38,6 @@ This function fetches the package in a uniform way
 <a name="JSON"></a>
 
 ## JSON : <code>object</code>
-A number, or a string containing a number.
+A JSON object
 
 **Kind**: global typedef  

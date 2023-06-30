@@ -3,7 +3,7 @@ environment-safe-package
 
 This normalizes the difference for local inclusion of package.json whether in node or the browser with no build.
 
-While babel will merrily pass this through, while browsers won't. If you want source execution in both environments without build, there is no option. That's where this comes in.
+Babel will merrily pass this through, while browsers won't. If you want source execution in both environments without build, there is no option. That's where this comes in.
 
 Usage
 -----

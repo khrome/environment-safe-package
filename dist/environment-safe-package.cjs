@@ -14,7 +14,7 @@ if (typeof require !== 'undefined') internalRequire = require;
 const ensureRequire = () => !internalRequire && (internalRequire = mod.createRequire(require('url').pathToFileURL(__filename).toString()));
 
 /**
- * A number, or a string containing a number.
+ * A JSON object
  * @typedef { object } JSON
  */
 
