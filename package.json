@@ -1,8 +1,25 @@
 {
     "name": "environment-safe-package",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "dist/environment-safe-package.cjs",
     "module": "src/environment-safe-package.mjs",
+    "homepage": "https://github.com/khrome/environment-safe-package",
+    "description": "Import package data in a uniform way across commonjs/modules and node/browser",
+    "keywords": [
+          "package.json",
+          "browser",
+          "import"
+    ],
+    "author": "Abbey Hawk Sparrow <@khrome> (http://patternweaver.com)",
+    "contributors": [],
+    "repository": {
+          "type": "git",
+          "url": "git@github.com:khrome/environment-safe-package.git"
+     },
+    "bugs": {
+          "url": "https://github.com/khrome/environment-safe-package/issues"
+    },
+    "license": "MIT",
     "devDependencies": {
         "@babel/cli": "^7.22.5",
         "@babel/core": "^7.22.5",
@@ -29,7 +46,7 @@
         "container-test": "docker build . -t environment-safe-package.json -f ./containers/test.dockerfile; docker logs --follow \"$(docker run -d environment-safe-package.json)\"",
         "generate-docs": "for i in src/*.mjs; do echo \"generating docs for: ${i}\";./node_modules/.bin/jsdoc2md -c .jsdoc.json \"${i}\" > \"docs/$(basename ${i%.mjs}).md\"; done",
         "generate-types": "for i in src/*.mjs; do echo \"generating types for: ${i}\"; ./node_modules/.bin/jsdoc -t node_modules/tsd-jsdoc/dist -c .jsdoc.json \"${i}\"; mv out/types.d.ts \"src/$(basename ${i%.mjs}).d.ts\"; done; rmdir out",
-        "add-generated-files-to-commit": "git add docs/*.md; git add src/*.d.ts",
+        "add-generated-files-to-commit": "git add docs/*.md; git add src/*.d.ts; git add dist/*.cjs",
         "prepare": "husky install"
     },
     "dependencies": {
