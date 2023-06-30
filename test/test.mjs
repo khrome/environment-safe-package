@@ -14,9 +14,9 @@ describe('environment-safe-package.json', ()=>{
         it('load it\'s own package.json', async ()=>{
            let pkg = null;
            let errMessage = null;
-            //try{
+            try{
                pkg = await getPackage();
-            //}catch(ex){ errMessage = ex.message }
+            }catch(ex){ errMessage = ex.message }
             if(pkg){
                pkg.name.should.equal('environment-safe-package');
                (typeof validSemver(pkg.version) === 'string').should.equal(true);
