@@ -1,8 +1,10 @@
 {
     "name": "environment-safe-package",
     "version": "0.0.1",
-    "main": "environment-safe-package.js",
+    "main": "dist/environment-safe-package.cjs",
+    "module": "environment-safe-package.mjs",
     "devDependencies": {
+        "babel-plugin-transform-import-meta": "^2.2.0",
         "chai": "^4.3.7",
         "environment-safe-chai": "^0.0.1",
         "mocha": "^10.2.0",
@@ -10,12 +12,18 @@
     },
     "scripts": {
         "lint": "./node_modules/.bin/eslint *.js src/*.js test/*.js",
-        "test": "./node_modules/.bin/mocha test/test.mjs",
-        "headless-browser-test":"./node_modules/.bin/mocha-chrome test/headless.html --chrome-flags '[ \"--disable-web-security\", \"--disable-site-isolation-trials\", \"--allow-file-access-from-files\", \"--allow-insecure-localhost\", \"--allow-running-insecure-content\"]' --ignore-exceptions",
+        "import-test": "./node_modules/.bin/mocha test/test.mjs",
+        "require-test": "./node_modules/.bin/mocha test/test.cjs",
+        "build-commonjs": "./node_modules/.bin/babel environment-safe-package.mjs --out-dir dist --out-file-extension .cjs",
+        "headless-browser-test": "./node_modules/.bin/mocha-chrome test/headless.html --chrome-flags '[ \"--disable-web-security\", \"--disable-site-isolation-trials\", \"--allow-file-access-from-files\", \"--allow-insecure-localhost\", \"--allow-running-insecure-content\"]' --ignore-exceptions",
         "browser-test": "open http://localhost:8000/test/browser.html; npx http-server -p 8000",
         "container-test": "docker build . -t environment-safe-package.json -f ./containers/test.dockerfile; docker logs --follow \"$(docker run -d environment-safe-package.json)\""
     },
     "dependencies": {
+        "@babel/cli": "^7.22.5",
+        "@babel/core": "^7.22.5",
+        "@babel/plugin-transform-modules-commonjs": "^7.22.5",
+        "babel-plugin-search-and-replace": "^1.1.1",
         "browser-or-node": "^2.1.1"
     }
 }

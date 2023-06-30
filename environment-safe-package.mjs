@@ -1,8 +1,9 @@
 import { isBrowser, isJsDom } from 'browser-or-node';
 import * as mod from 'module';
 import * as path from 'path';
-let require = null;
-const ensureRequire = ()=> (!require) && (require = mod.createRequire(import.meta.url));
+let internalRequire = null;
+if(typeof require !== 'undefined') internalRequire = require;
+const ensureRequire = ()=> (!internalRequire) && (internalRequire = mod.createRequire(import.meta.url));
 
 export let baseDir = '..';
 export const getPackage = async ()=>{
@@ -13,6 +14,6 @@ export const getPackage = async ()=>{
         return data;
     }else{
         ensureRequire();
-        return require(path.join(process.cwd(), 'package.json'));
+        return internalRequire(path.join(process.cwd(), 'package.json'));
     }
 }

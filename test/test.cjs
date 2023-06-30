@@ -1,5 +1,5 @@
-import { chai } from 'environment-safe-chai';
-import { getPackage } from '../environment-safe-package.mjs';
+const should = require('chai').should();
+const { getPackage } = require('../dist/environment-safe-package.cjs');
 
 const semverRegex = /^((([0-9]+)\.([0-9]+)\.([0-9]+)(?:-([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?)$/g;
 const validSemver = (value='')=>{
@@ -7,16 +7,15 @@ const validSemver = (value='')=>{
       value
    ).match(semverRegex) && value;
 }
-const should = chai.should();
 
 describe('environment-safe-package.json', ()=>{
    describe('performs a simple test suite', ()=>{
         it('load it\'s own package.json', async ()=>{
            let pkg = null;
            let errMessage = null;
-            //try{
+            try{
                pkg = await getPackage();
-            //}catch(ex){ errMessage = ex.message }
+            }catch(ex){ errMessage = ex.message }
             if(pkg){
                pkg.name.should.equal('environment-safe-package');
                (typeof validSemver(pkg.version) === 'string').should.equal(true);
