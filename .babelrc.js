@@ -7,6 +7,10 @@ module.exports = {
                 {
                   "search": /\.mjs/,
                   "replace": ".cjs"
+                },
+                {
+                  "search": /\.\/src\//,
+                  "replace": "./dist/"
                 }
             ]
         }]

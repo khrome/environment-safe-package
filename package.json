@@ -2,7 +2,7 @@
     "name": "environment-safe-package",
     "version": "0.0.2",
     "main": "dist/environment-safe-package.cjs",
-    "module": "environment-safe-package.mjs",
+    "module": "src/environment-safe-package.mjs",
     "devDependencies": {
         "@babel/cli": "^7.22.5",
         "@babel/core": "^7.22.5",
@@ -11,17 +11,26 @@
         "babel-plugin-transform-import-meta": "^2.2.0",
         "chai": "^4.3.7",
         "environment-safe-chai": "^0.0.1",
+        "eslint": "^8.43.0",
+        "husky": "^8.0.3",
+        "jsdoc": "^3.6.11",
+        "jsdoc-to-markdown": "^8.0.0",
         "mocha": "^10.2.0",
-        "mocha-chrome": "^2.2.0"
+        "mocha-chrome": "^2.2.0",
+        "tsd-jsdoc": "^2.5.0"
     },
     "scripts": {
-        "lint": "./node_modules/.bin/eslint *.js src/*.js test/*.js",
+        "lint": "./node_modules/.bin/eslint src/*.mjs test/*.mjs",
         "import-test": "./node_modules/.bin/mocha test/test.mjs",
         "require-test": "./node_modules/.bin/mocha test/test.cjs",
-        "build-commonjs": "./node_modules/.bin/babel environment-safe-package.mjs --out-dir dist --out-file-extension .cjs",
+        "build-commonjs": "./node_modules/.bin/babel src --out-dir dist --out-file-extension .cjs",
         "headless-browser-test": "./node_modules/.bin/mocha-chrome test/headless.html --chrome-flags '[ \"--disable-web-security\", \"--disable-site-isolation-trials\", \"--allow-file-access-from-files\", \"--allow-insecure-localhost\", \"--allow-running-insecure-content\"]' --ignore-exceptions",
         "browser-test": "open http://localhost:8000/test/browser.html; npx http-server -p 8000",
-        "container-test": "docker build . -t environment-safe-package.json -f ./containers/test.dockerfile; docker logs --follow \"$(docker run -d environment-safe-package.json)\""
+        "container-test": "docker build . -t environment-safe-package.json -f ./containers/test.dockerfile; docker logs --follow \"$(docker run -d environment-safe-package.json)\"",
+        "generate-docs": "for i in src/*.mjs; do echo \"generating docs for: ${i}\";./node_modules/.bin/jsdoc2md -c .jsdoc.json \"${i}\" > \"docs/$(basename ${i%.mjs}).md\"; done",
+        "generate-types": "for i in src/*.mjs; do echo \"generating types for: ${i}\"; ./node_modules/.bin/jsdoc -t node_modules/tsd-jsdoc/dist -c .jsdoc.json \"${i}\"; mv out/types.d.ts \"src/$(basename ${i%.mjs}).d.ts\"; done; rmdir out",
+        "add-generated-files-to-commit": "git add docs/*.md; git add src/*.d.ts",
+        "prepare": "husky install"
     },
     "dependencies": {
         "browser-or-node": "^2.1.1"
