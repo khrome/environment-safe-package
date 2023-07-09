@@ -1,6 +1,6 @@
 {
     "name": "environment-safe-package",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "main": "dist/environment-safe-package.cjs",
     "module": "src/environment-safe-package.mjs",
     "homepage": "https://github.com/khrome/environment-safe-package",

@@ -49,8 +49,8 @@ npm run container-test
 ```
 
 
-Contribution
-------------
+Development
+-----------
 All work is done in the .mjs files and will be transpiled on commit to commonjs and tested.
 
 If the above tests pass, then attempt a commit which will generate .d.ts files alongside the `src` files and commonjs classes in `dist`

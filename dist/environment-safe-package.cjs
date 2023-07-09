@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getPackage = exports.baseDir = void 0;
+exports.setBaseDir = exports.getPackage = void 0;
 var _browserOrNode = require("browser-or-node");
 var mod = _interopRequireWildcard(require("module"));
 var path = _interopRequireWildcard(require("path"));
@@ -12,17 +12,20 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 let internalRequire = null;
 if (typeof require !== 'undefined') internalRequire = require;
 const ensureRequire = () => !internalRequire && (internalRequire = mod.createRequire(require('url').pathToFileURL(__filename).toString()));
-
 /**
  * A JSON object
  * @typedef { object } JSON
  */
 
 /**
- * The basedir for fetching the package (defaults to '..').
- * @var {number} baseDir
- */
+  * set the baseDir
+  * @function setBaseDir
+  * @param {string} newBaseDir The basedir for fetching the package (defaults to '..').
+  */
 let baseDir = '..';
+const setBaseDir = value => {
+  baseDir = value;
+};
 
 /**
  * This function fetches the package in a uniform way
@@ -30,16 +33,24 @@ let baseDir = '..';
  * @function getPackage
  * @returns { JSON } packageData
  */
-exports.baseDir = baseDir;
-const getPackage = async () => {
-  if (_browserOrNode.isBrowser || _browserOrNode.isJsDom) {
-    const url = `${baseDir}/package.json`;
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-  } else {
-    ensureRequire();
-    return internalRequire(path.join(process.cwd(), 'package.json'));
+exports.setBaseDir = setBaseDir;
+const getPackage = async (incomingPath, allowErrors) => {
+  let thisPath;
+  try {
+    if (_browserOrNode.isBrowser || _browserOrNode.isJsDom) {
+      thisPath = incomingPath ? incomingPath[incomingPath.length - 1] === '/' ? incomingPath + 'package.json' : incomingPath + '/package.json' : 'package.json';
+      const url = `${baseDir}/${thisPath}`;
+      const response = await fetch(url);
+      const data = await response.json();
+      return data;
+    } else {
+      thisPath = incomingPath ? path.join(incomingPath, 'package.json') : path.join(process.cwd(), 'package.json');
+      ensureRequire();
+      return internalRequire(thisPath);
+    }
+  } catch (ex) {
+    console.log(ex);
+    if (allowErrors) throw new Error('Error loading package:' + incomingPath);
   }
 };
 exports.getPackage = getPackage;

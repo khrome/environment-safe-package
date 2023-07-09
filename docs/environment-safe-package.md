@@ -1,14 +1,9 @@
-## Members
-
-<dl>
-<dt><a href="#baseDir">baseDir</a> : <code>number</code></dt>
-<dd><p>The basedir for fetching the package (defaults to &#39;..&#39;).</p>
-</dd>
-</dl>
-
 ## Functions
 
 <dl>
+<dt><a href="#setBaseDir">setBaseDir(newBaseDir)</a></dt>
+<dd><p>set the baseDir</p>
+</dd>
 <dt><a href="#getPackage">getPackage()</a> ⇒ <code><a href="#JSON">JSON</a></code></dt>
 <dd><p>This function fetches the package in a uniform way</p>
 </dd>
@@ -22,12 +17,17 @@
 </dd>
 </dl>
 
-<a name="baseDir"></a>
+<a name="setBaseDir"></a>
 
-## baseDir : <code>number</code>
-The basedir for fetching the package (defaults to '..').
+## setBaseDir(newBaseDir)
+set the baseDir
 
-**Kind**: global variable  
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| newBaseDir | <code>string</code> | The basedir for fetching the package (defaults to '..'). |
+
 <a name="getPackage"></a>
 
 ## getPackage() ⇒ [<code>JSON</code>](#JSON)
